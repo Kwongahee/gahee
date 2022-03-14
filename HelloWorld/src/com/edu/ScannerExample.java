@@ -14,6 +14,7 @@ public class ScannerExample { // com.edu.ScannerExample
 	    int result = val + val2; 
 	  
 	    System.out.println("두수의 합은 " + result + "입니다." );
+//	    System.out.println(" 두수의 합은 " + (10+20) + "입니다"); // 먼저 실행해야 될것들은 괄호로 묶어주기
 
 //	if(val % 2 ==0) {
 //			System.out.println("짝수입니다.");
