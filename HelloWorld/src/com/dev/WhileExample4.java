@@ -15,28 +15,29 @@ public class WhileExample4 {
 		while (true) {
 			System.out.println(" 1.입금 2.출금 3.종료 ");
 			int menu = scn.nextInt();
-			if (menu == 1) { //입금일경우
+			if (menu == 1) { // 입금일경우
 				System.out.println("입금액을 입력하세요");
 				int inputVal = scn.nextInt();
 				account += inputVal;
 				System.out.println("잔액은 " + account + "원 입니다.");
 
-			} else if (menu == 2) { //출금일 경우
+			} else if (menu == 2) { // 출금일 경우
 				System.out.println("출금액을 입력하세요");
 				int inputVal = scn.nextInt();
-				if (account < inputVal) { //잔액부족이라 출금이 불가능 할 경우
+				if (account < inputVal) { // 잔액부족이라 출금이 불가능 할 경우
 					System.out.println("잔액부족");
 					System.out.println("잔액은" + account + "원 입니다.");
-				continue; //구문 아래를 무시 다음순번으로 넘어감
-				} account -= inputVal;
+					continue; // 구문 아래를 무시 다음순번으로 넘어감
+				}
+				account -= inputVal;
 				System.out.println("잔액은 " + account + "원 입니다.");
-				
+
 //				else {  continue 구문쓰면 굳이 else 안써도 넘어감
 //				account -= inputVal;
 //				System.out.println("잔액은 " + account + "원 입니다.");
 //				}
 
-			} else if (menu == 3) { //끝
+			} else if (menu == 3) {
 				System.out.println("프로그램을 종료합니다.");
 				break;
 			}
