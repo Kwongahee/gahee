@@ -1,4 +1,4 @@
-package com.prod;
+package com.prod; 
 
 public class Employee {
 	// 값을 담기 위한 용도 : field.
