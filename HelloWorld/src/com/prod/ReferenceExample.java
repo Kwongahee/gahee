@@ -1,8 +1,4 @@
 package com.prod;
-class {
-	String name;
-	int age;
-}
 
 public class ReferenceExample {
 	public static void main(String[] args) {
