@@ -1,10 +1,29 @@
-package com.edu.abstracts;
+package com.edu.except;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.edu.abstracts.Book;
+
+//싱글톤 필드를 외부에서 접근못하게 막아버리고, 라이브러리 exe만 존재하게..
+		
 public class LibraryExe {
-	public static void main(String[] args) {
+	private static LibraryExe singleton = new LibraryExe();
+//클래스A, 클래스B, 클래스C....클래스Z
+//	클래스 main > main메소드 포함
+	
+	
+	private LibraryExe() { 
+
+	}
+
+	public static LibraryExe getInstatnce() {
+		return singleton;
+	}
+	
+		
+//	public static void main(String[] args) {
+	public void run() {
 		// 책제목, 저자, 가격 > 저장
 		// 리스트 보여주기.
 		Scanner scn = new Scanner(System.in);
@@ -24,6 +43,7 @@ public class LibraryExe {
 					scn.next();
 				}
 			}
+			
 			if (menu == 1) {
 				showMessage("책 제목을 입력>> ");
 				String title = scn.next();
@@ -66,7 +86,7 @@ public class LibraryExe {
 
 	}
 
-	public static void showMessage(String str) {
+	public void showMessage(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			System.out.print(str.charAt(i));
 			try {
