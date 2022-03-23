@@ -35,8 +35,19 @@ public class HashtableExample {
 				System.out.println("입력하신 아이디가 존재하지 않습니다."); //아이디가 없다면
 			}
 		
-		}
+		} 
 		
 		
 	}
 }
+
+
+//인터페이스 활용 !!
+//
+//배열, arraylist > 값을 저장하기 위한 용도..
+//배열을 arraylist로 변경해서 활용 !
+//
+//배열 ->
+//인터페이스, 중첩클래스(Nested class) 추가 !
+//
+//>>>>단순한 구조 말고 기능확장해서 구현하기 !! 

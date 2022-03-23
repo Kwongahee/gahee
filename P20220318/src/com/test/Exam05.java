@@ -36,7 +36,7 @@ public class Exam05 {
 			} else if (menu == 2) {
 				for (int i = 0; i < books.length; i++) {
 					if (books[i] != null) {
-						System.out.println(books[i].getBookinfo());
+						System.out.println(books[i].showinfo());
 
 					}
 				}
