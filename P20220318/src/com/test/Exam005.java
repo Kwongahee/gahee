@@ -18,7 +18,7 @@ public class Exam005 {
 		System.out.println("가격입력>> ");
 		int price = scn.nextInt();
 
-		Book book = new Book(title, author, press, price);
+		Book book = new Book(title, author, press, price); //이름 통일
 		book.showInfo2();
 	}
 }
