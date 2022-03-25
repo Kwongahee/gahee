@@ -29,6 +29,8 @@ public class BankApp {
 				withdraw();
 			} else if (menu == 4) {
 				findAccountMoney();
+			} else if (menu == 5) {
+				withdraw();
 			} else if (menu == 6) {
 				System.out.println("프로그램을 종료합니다.");
 				break;
@@ -176,45 +178,47 @@ public class BankApp {
 
 	// 송금 메소드
 	public static void transferAmount() {
-		System.out.println("송금");		
-		System.out.print(" 계좌번호 >> ");
-		String sendno = scn.next();
-		System.out.print("송금 금액 >>");
-		int sendmoney = scn.nextInt();
-		System.out.print("입금할 번호 >>");
-		String putno = scn.next(); 
-		
+		System.out.println("송금기능");
+		System.out.println("송금계좌 입력");
+		String outputNo = scn.next();
+		System.out.println("금액");
+		int amt = scn.nextInt();
+		System.out.println("입금계좌 입력");
+		String inputNo = scn.next();
+
 		int checkCnt = 0;
 
-		Account sendAccount = searchAccountNo(sendAccountNo);
-		Account receiveAccnt = searchAccountNo(receiveAccntNo);
-		// 계좌가 존재 
-		if (findAccount.equals(receiveAccnt)) {
-			checkCnt = 1; } else { receiveAccnt .setMoney((send money);}
+		Account findAccount = searchAccountNo(outputNo);
+		if (findAccount != null)
+			checkCnt = 1;
 		int currAmt = findAccount.getMoney();
-
-		// 잔액초과
 		if (currAmt < amt) {
 			checkCnt = 2;
 		} else {
-			findAccount.setMoney(currAmt - amt); // 잔액 + 입금액
+			findAccount.setMoney(currAmt - amt);
 		}
-
 		if (checkCnt == 1) {
-			System.out.println("정상적으로 처리되었습니다.");
+			System.out.println("정상적으로 처리하였습니다.");
 		} else if (checkCnt == 2) {
-			System.out.println("잔액 초과했습니다.");
+			System.out.println("송금을 보낼 금액이 부족합니다");
+			return;
 		} else {
 			System.out.println("계좌번호가 없습니다.");
 		}
+		int checkCnt1 = 0;
+		Account findAccount1 = searchAccountNo(inputNo);
+		if (findAccount != null)
+			checkCnt1 = 1;
+		int currAmt1 = findAccount1.getMoney();
+		findAccount1.setMoney(currAmt1 + amt);
 
+		if (checkCnt1 == 1) {
+			System.out.println("정상처리되었습니다.");
+		} else {
+			System.out.println("입금가능한 계좌가 없습니다");
+		}
+		return;
 	}
-
-	}
-		
-
-
-			
 
 //	public static void findAccountMoney() {
 //		System.out.println("잔액조회기능");

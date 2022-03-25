@@ -17,7 +17,7 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
 	// 멤버클래스 //기능 여기 넣기
-	class StudentServiceImpl implements StudentService {
+	class StudentServiceFile implements StudentService {
 
 		@Override
 		public void insertStudent(Student student) {
@@ -74,10 +74,16 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			return searchStudent;
 
 		}
+
+		@Override
+		public void saveTofile() {
+			// TODO Auto-generated method stub
+			
+		}
 	}// end of StudentServiceImpl
 
 	public void execute() {
-		StudentService service = new StudentServiceImpl();
+		StudentService service = new StudentServiceFile();
 		// 요것은 메소드다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 다른 기능을 호출
 		// 메뉴: 1.추가 2.리스트 3.한건조회 4.수정 6.이름조회(이름) 9.종료..
 		// 인터페이스를 변수이름으로 선언 ..
@@ -143,6 +149,7 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			} else if (menu == 9) {
 				System.out.println("프로그램을 종료합니다");
+				service.saveTofile();
 				break;
 			}
 
