@@ -5,19 +5,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+	
+// 필드
 	List<Student> list = new ArrayList<Student>(); // 값을 담고 불러오는 기능.. 배열처럼 표현하는
 	Scanner scn = new Scanner(System.in);
 
 	// 생성자
 	public StudentApp() {
-		list.add(new Student(101, "권가희", 50, 60));
-		list.add(new Student(102, "해정잉", 70, 80));
-		list.add(new Student(103, "유빈잉", 90, 70));
+//		list.add(new Student(101, "권가희", 50, 60));
+//		list.add(new Student(102, "해정잉", 70, 80));
+//		list.add(new Student(103, "유빈잉", 90, 70));
 	}
 
 	// 멤버클래스 //기능 여기 넣기
-	class StudentServiceFile implements StudentService {
+	class StudentServiceImpl implements StudentService {
 
 		@Override
 		public void insertStudent(Student student) {
@@ -82,11 +83,14 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 	}// end of StudentServiceImpl
 
-	public void execute() {
-		StudentService service = new StudentServiceFile();
+	public void execute() { //실제 실행메소드
+
+		StudentService service = new StudentServiceImpl();
+				service = new StudentServiceFile(); 
 		// 요것은 메소드다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 다른 기능을 호출
 		// 메뉴: 1.추가 2.리스트 3.한건조회 4.수정 6.이름조회(이름) 9.종료..
 		// 인터페이스를 변수이름으로 선언 ..
+		// 메인기능 담당하는 execute()
 		while (true) {
 			System.out.println("1.추가  2.리스트  3.한건조회  4.수정  5.삭제  6.이름조회  9.종료");
 			System.out.print("선택 >> ");

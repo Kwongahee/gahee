@@ -114,6 +114,8 @@ public class MemberApp {
 			 else if (menu == 9) {
 				System.out.println("프로그램을 종료합니다.");
 				break;
+			} else {
+				System.out.println("잘못된 메뉴를 선택했습니다.");
 			}
 
 		}
