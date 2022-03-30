@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
+
 // 필드
 	List<Student> list = new ArrayList<Student>(); // 값을 담고 불러오는 기능.. 배열처럼 표현하는
 	Scanner scn = new Scanner(System.in);
@@ -79,14 +79,15 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		@Override
 		public void saveTofile() {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}// end of StudentServiceImpl
 
-	public void execute() { //실제 실행메소드
-
-		StudentService service = new StudentServiceImpl();
-				service = new StudentServiceFile(); 
+	public void execute() { // 실제 실행메소드
+		StudentService service = null;
+//		new StudentServiceImpl();
+//		service = new StudentServiceFile();
+		service = new StudentServiceOracle();
 		// 요것은 메소드다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 다른 기능을 호출
 		// 메뉴: 1.추가 2.리스트 3.한건조회 4.수정 6.이름조회(이름) 9.종료..
 		// 인터페이스를 변수이름으로 선언 ..
@@ -106,7 +107,6 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				int engScore = scn.nextInt();
 				System.out.println("국어점수입력>>");
 				int korScore = scn.nextInt();
-
 				Student s1 = new Student(StuNo, name, engScore, korScore);
 				service.insertStudent(s1);
 
@@ -152,7 +152,7 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				}
 
 			} else if (menu == 9) {
-				System.out.println("프로그램을 종료합니다");
+				System.out.println("프로그램을 종s료합니다");
 				service.saveTofile();
 				break;
 			}
