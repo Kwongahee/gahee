@@ -5,6 +5,8 @@ public class Books { //관리자 클래스
 	private String title;
 	private String writer;
 	private String comapany;
+	private String id;
+	private int pwd;
 
 	
 	
@@ -13,6 +15,15 @@ public class Books { //관리자 클래스
 	}
 	
 	
+
+
+	public Books(String id, int pwd) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+	}
+
+
 
 
 	public Books(int booknumber, String title, String writer, String comapany) {
@@ -46,6 +57,34 @@ public class Books { //관리자 클래스
 	public void setComapany(String comapany) {
 		this.comapany = comapany;
 	}
+
+
+
+	public String getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
+
+	public int getPwd() {
+		return pwd;
+	}
+
+
+
+
+	public void setPwd(int pwd) {
+		this.pwd = pwd;
+	}
+
 
 
 

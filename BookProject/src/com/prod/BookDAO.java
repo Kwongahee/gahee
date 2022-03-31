@@ -7,32 +7,12 @@ import java.util.List;
 public class BookDAO extends DAO { //기능메소드 담기
 
 	
-	public boolean login(Books book) {
-		conn = getConnect();
-		String sql = "select *\r\n"
-				+ "from b_table\r\n"
-				+ "where b_id=?\r\n"
-				+ "and b_wd=?";
-		
-		try {
-			psmt=conn.prepareStatement(sql);
-			
-			int r =psmt.executeUpdate();
-			if (r==true) {
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	
-	}
 	
 	//입력처리
 	public void insertBook(Books book) {
 		conn = getConnect();
-		String sql = "insert into b_table (b_no, b_title, b_writer, b_company,)\r\n"
-				+ "values (? , ? , '? , ?)";
+		String sql = "insert into b_table (b_no, b_title, b_writer, b_company)\r\n"
+				+ "values (? , ? , ? , ?)";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
