@@ -112,9 +112,11 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			} else if (menu == 2) {
 				List<Student> list = service.Studentlist();
+				System.out.println("===================학생리스트=======================");
 				for (Student s : list) {
 					System.out.println(s.toString());
 				}
+				System.out.println("==================================================");
 
 			} else if (menu == 3) { // 한건 조회
 				System.out.println("조회할 학생번호 입력>>");
@@ -147,9 +149,12 @@ public class StudentApp { // 기능 다 넣겠다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				System.out.println("조회할 학생이름 입력>>");
 				String name = scn.next();
 				List<Student> list = service.searchStudent(name);
+				System.out.println("===================학생리스트=======================");
 				for (Student s : list) {
 					System.out.println(s.toString());
 				}
+				System.out.println("==================================================");
+
 
 			} else if (menu == 9) {
 				System.out.println("프로그램을 종s료합니다");
