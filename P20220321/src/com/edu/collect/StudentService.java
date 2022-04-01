@@ -16,5 +16,6 @@ public interface StudentService {
 	public void deleteStudent(int sno); // 한건삭제
 
 	public List<Student> searchStudent(String name); // 이름 조회 //여러건 반환 ...ㅠ
+	
 	public void saveTofile();
 }

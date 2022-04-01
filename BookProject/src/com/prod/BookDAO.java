@@ -4,81 +4,97 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAO extends DAO { //기능메소드 담기
+public class BookDAO extends DAO implements BookService { // 기능메소드 담기
 
-	
-	
-	//입력처리
+	// 로그인
+	public boolean login(String id, int pwd) {
+		conn = getConnect();
+		String sql = "select * from b_table where b_id =? and b_wd=?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setInt(2, pwd);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				System.out.println("로그인 성공!!");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}return false;
+
+	}
+
+	// 입력처리
 	public void insertBook(Books book) {
 		conn = getConnect();
-		String sql = "insert into b_table (b_no, b_title, b_writer, b_company)\r\n"
-				+ "values (? , ? , ? , ?)";
-		
+		String sql = "insert into b_table (b_no, b_title, b_writer, b_company)\r\n" + "values (? , ? , ? , ?)";
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, book.getBooknumber());
 			psmt.setString(2, book.getTitle());
 			psmt.setString(3, book.getWriter());
 			psmt.setString(4, book.getComapany());
-			
+
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			disconnect();
 		}
-	
+
 	}
-	
-	//수정처리
+
+	// 수정처리
 	public void updateBook(Books book) {
-		conn=getConnect();
-		String sql = "update b_table\r\n"
-				+ "set b_title=?,\r\n"
-				+ "    b_writer=?,\r\n"
-				+ "    b_company=?\r\n"
+		conn = getConnect();
+		String sql = "update b_table\r\n" + "set b_title=?,\r\n" + "    b_writer=?,\r\n" + "    b_company=?\r\n"
 				+ "where b_no=?";
-		
+
 		try {
-			psmt=conn.prepareStatement(sql);
-			psmt.setString(1,book.getTitle());
-			psmt.setString(2,book.getWriter());
-			psmt.setString(3,book.getComapany());
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, book.getTitle());
+			psmt.setString(2, book.getWriter());
+			psmt.setString(3, book.getComapany());
 			psmt.setInt(4, book.getBooknumber());
 
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 수정");
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
-			
-		
+
 	}
-	
-	//삭제처리
+
+	// 삭제처리
 	public void deleteBook(int bookid) {
 		conn = getConnect();
 		String sql = "delete from b_table\r\n" + "where b_no=?";
-		
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, bookid);
-			
+
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 삭제");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			 disconnect();
+		} finally {
+			disconnect();
 		}
-		
+
 	}
-	
-	//목록조회
+
+	// 목록조회
 	public List<Books> bookList() {
 		List<Books> bk = new ArrayList<Books>();
 		conn = getConnect();
@@ -91,18 +107,41 @@ public class BookDAO extends DAO { //기능메소드 담기
 				book.setTitle(rs.getString("b_title"));
 				book.setWriter(rs.getString("b_writer"));
 				book.setComapany(rs.getString("b_company"));
-				
+
 				bk.add(book);
 			}
-		} catch (SQLException e) {			
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			disconnect();
 		}
-		
+
 		return bk;
 	}
+
+	// 회원가입 기능
+	public void insertUser(User users) {
+		conn = getConnect();
+		String sql = "insert into user_login (user_id, user_pwd, user_name)\r\n" + "values (?,?,?)";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, users.getUserid());
+			psmt.setInt(2, users.getPasswd());
+			psmt.setString(3, users.getName());
+
+			int r = psmt.executeUpdate();
+			System.out.println();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	//대출기능
+	public void hibook() {
 	
 
-
 }
+	}
