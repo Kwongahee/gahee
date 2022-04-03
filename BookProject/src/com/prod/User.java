@@ -2,7 +2,7 @@ package com.prod;
 
 public class User {
 	private String userid;
-	private int passwd;
+	private String passwd;
 	private String name;
 	
 	
@@ -12,10 +12,10 @@ public class User {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public int getPasswd() {
+	public String getPasswd() {
 		return passwd;
 	}
-	public void setPasswd(int passwd) {
+	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
 	public String getName() {

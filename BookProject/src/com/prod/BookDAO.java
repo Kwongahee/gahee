@@ -7,14 +7,14 @@ import java.util.List;
 public class BookDAO extends DAO implements BookService { // 기능메소드 담기
 
 	// 로그인
-	public boolean login(String id, int pwd) {
+	public boolean login(String id, String pwd) {
 		conn = getConnect();
 		String sql = "select * from b_table where b_id =? and b_wd=?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
-			psmt.setInt(2, pwd);
+			psmt.setString(2, pwd);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				System.out.println("로그인 성공!!");
@@ -25,14 +25,17 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			e.printStackTrace();
 		} finally {
 			disconnect();
-		}return false;
+		}
+		System.out.println("로그인 실패 !");
+		return false;
 
 	}
 
 	// 입력처리
 	public void insertBook(Books book) {
 		conn = getConnect();
-		String sql = "insert into b_table (b_no, b_title, b_writer, b_company)\r\n" + "values (? , ? , ? , ?)";
+		String sql = "insert into b_table (b_no, b_title, b_writer, b_company, stock)\r\n"
+				+ "values (? , ? , ? , ?, ?)";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -40,7 +43,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			psmt.setString(2, book.getTitle());
 			psmt.setString(3, book.getWriter());
 			psmt.setString(4, book.getComapany());
-
+			psmt.setInt(5, book.getStock());
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력");
 		} catch (SQLException e) {
@@ -54,8 +57,8 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	// 수정처리
 	public void updateBook(Books book) {
 		conn = getConnect();
-		String sql = "update b_table\r\n" + "set b_title=?,\r\n" + "    b_writer=?,\r\n" + "    b_company=?\r\n"
-				+ "where b_no=?";
+		String sql = "update b_table\r\n" + "set b_title=?,\r\n" + "    b_writer=?,\r\n" + "    b_company=?,\r\n"
+				+ "stock=?" + "where b_no=?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -63,6 +66,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			psmt.setString(2, book.getWriter());
 			psmt.setString(3, book.getComapany());
 			psmt.setInt(4, book.getBooknumber());
+			psmt.setInt(5, book.getStock());
 
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 수정");
@@ -107,6 +111,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 				book.setTitle(rs.getString("b_title"));
 				book.setWriter(rs.getString("b_writer"));
 				book.setComapany(rs.getString("b_company"));
+				book.setStock(rs.getInt("stock"));
 
 				bk.add(book);
 			}
@@ -127,21 +132,48 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, users.getUserid());
-			psmt.setInt(2, users.getPasswd());
+			psmt.setString(2, users.getPasswd());
 			psmt.setString(3, users.getName());
 
 			int r = psmt.executeUpdate();
-			System.out.println();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			disconnect();
 		}
 
 	}
-	
-	//대출기능
-	public void hibook() {
-	
+
+	// 대출기능
+	public  boolean borrow(Books bNo) {
+		conn = getConnect();
+		Books book=null;
+		String sql = "select *\r\n"
+				+ "from b_table\r\n"
+				+ "where b_no=?";	
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, bNo.getBooknumber());
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				book = new Books();
+				book.setStock(rs.getInt("stock"));
+				//재고를 하나씩 지워야함.
+			
+			}
+			
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return false;
+		
+	}
 
 }
-	}

@@ -6,7 +6,8 @@ public class Books { //관리자 클래스
 	private String writer;
 	private String comapany;
 	private String id;
-	private int pwd;
+	private String pwd;
+	private int stock;
 
 	
 	
@@ -17,7 +18,7 @@ public class Books { //관리자 클래스
 	
 
 
-	public Books(String id, int pwd) {
+	public Books(String id, String pwd) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
@@ -26,13 +27,19 @@ public class Books { //관리자 클래스
 
 
 
-	public Books(int booknumber, String title, String writer, String comapany) {
+
+	public Books(int booknumber, String title, String writer, String comapany, int stock) {
 		super();
 		this.booknumber = booknumber;
 		this.title = title;
 		this.writer = writer;
 		this.comapany = comapany;
+		this.stock = stock;
 	}
+
+
+
+
 	public int getBooknumber() {
 		return booknumber;
 	}
@@ -60,6 +67,8 @@ public class Books { //관리자 클래스
 
 
 
+
+
 	public String getId() {
 		return id;
 	}
@@ -74,15 +83,29 @@ public class Books { //관리자 클래스
 
 
 
-	public int getPwd() {
+	public String getPwd() {
 		return pwd;
 	}
 
 
 
 
-	public void setPwd(int pwd) {
+	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+
+
+
+	public int getStock() {
+		return stock;
+	}
+
+
+
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 
@@ -92,7 +115,7 @@ public class Books { //관리자 클래스
 	public String toString() {
 		return "==================================도서 정보 =======================================\r\n"
 				+ " [ 도서번호 : " + booknumber + " 도서제목 : " + title + " 지은이 : " + writer + " 출판사 : " + comapany
-				+ "]";
+				+ "재고 : " + stock + " ]";
 	}
 	
 	
