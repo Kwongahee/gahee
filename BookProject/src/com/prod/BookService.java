@@ -14,7 +14,13 @@ public interface BookService {
 	
 	public List<Books> bookList(); //책목록
 	
+	public List<User> UserList(); //회원조회
+	
+	public User loginuser(String userid, String userwd); //회원로그인
+	
 	public void insertUser(User users); //회원가입
+	
+	public Books borrow(Books book); //대출
 	
 	
 }

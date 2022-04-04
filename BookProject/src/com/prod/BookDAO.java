@@ -124,10 +124,37 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		return bk;
 	}
 
+	// 회원조회
+	public List<User> UserList() {
+		List<User> us = new ArrayList<User>();
+		conn = getConnect();
+		try {
+			psmt = conn.prepareStatement("select*from user_table");
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				User users = new User();
+				users.setUserid(rs.getString("m_id"));
+				users.setPasswd(rs.getString("m_wd"));
+				users.setName(rs.getString("m_name"));
+
+				us.add(users);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
+		return us;
+
+	}
+
 	// 회원가입 기능
 	public void insertUser(User users) {
 		conn = getConnect();
-		String sql = "insert into user_login (user_id, user_pwd, user_name)\r\n" + "values (?,?,?)";
+		String sql = "insert into user_table (m_id, m_wd, m_name)\r\n"
+				+ "values (?,?,?)";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -144,27 +171,54 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 
 	}
 
+	// 회원로그인기능
+	public User loginuser(String userid, String userwd) {
+		conn = getConnect();
+		User users1 = null;
+		String sql = "select *\r\n" + "from user_table\r\n" + "where m_id=? and m_wd=?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userid);
+			psmt.setString(2, userwd);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				users1 = new User();
+				users1.setUserid(rs.getString("m_id"));
+				users1.setPasswd(rs.getString("m_wd"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
+		return users1;
+
+	}
+
 	// 대출기능
 	public Books borrow(Books book) {
 		conn = getConnect();
-		String sql = "update b_table\r\n"
-				+ "set stock=?-1," + "where b_no=?";
+		String sql = "update b_table\r\n" + "set stock=?-1" + "where b_no=?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, book.getStock());
-			psmt.setString(2, book.getId());			
+			psmt.setInt(2, book.getBooknumber());
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 대출");
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			disconnect();
 		}
 		return book;
-		
+
 	}
-	
-	//반납기능
+
+	// 반납기능
 
 }

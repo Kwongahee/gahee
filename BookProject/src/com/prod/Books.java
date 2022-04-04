@@ -122,8 +122,8 @@ public class Books { //관리자 클래스
 	@Override
 	public String toString() {
 		return "==================================도서 정보 =======================================\r\n"
-				+ " [ 도서번호 : " + booknumber + " 도서제목 : " + title + " 지은이 : " + writer + " 출판사 : " + comapany
-				+ "재고 : " + stock + " ]";
+				+ " [ 도서번호 : " + booknumber + "   도서제목 : " + title + "   지은이 : " + writer + "   출판사 : " + comapany
+				+ "    재고 : " + stock + " ]";
 	}
 	
 	

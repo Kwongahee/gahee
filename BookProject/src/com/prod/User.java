@@ -5,7 +5,17 @@ public class User {
 	private String passwd;
 	private String name;
 	
+
+	public User() {
+		
+	}
 	
+	
+	public User(String userid, String passwd) {
+		super();
+		this.userid = userid;
+		this.passwd = passwd;
+	}
 	public String getUserid() {
 		return userid;
 	}
@@ -23,6 +33,12 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	@Override
+	public String toString() {
+		return "User [회원아이디 = " + userid + ", 이름 = " + name + "]";
 	}
 
 	
