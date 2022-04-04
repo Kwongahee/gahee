@@ -145,35 +145,26 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	}
 
 	// 대출기능
-	public  boolean borrow(Books bNo) {
+	public Books borrow(Books book) {
 		conn = getConnect();
-		Books book=null;
-		String sql = "select *\r\n"
-				+ "from b_table\r\n"
-				+ "where b_no=?";	
-		
+		String sql = "update b_table\r\n"
+				+ "set stock=?-1," + "where b_no=?";
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, bNo.getBooknumber());
-			
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-				book = new Books();
-				book.setStock(rs.getInt("stock"));
-				//재고를 하나씩 지워야함.
-			
-			}
-			
-			
-			
+			psmt.setInt(1, book.getStock());
+			psmt.setString(2, book.getId());			
+			int r = psmt.executeUpdate();
+			System.out.println(r + "건 대출");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			disconnect();
 		}
-		return false;
+		return book;
 		
 	}
+	
+	//반납기능
 
 }

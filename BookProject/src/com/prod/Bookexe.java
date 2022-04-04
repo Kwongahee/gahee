@@ -1,8 +1,7 @@
 package com.prod;
 
-import java.util.Hashtable;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Bookexe {
@@ -52,7 +51,7 @@ public class Bookexe {
 							String writer = scn.next();
 							System.out.println("출판사를 입력하세요.");
 							String company = scn.next();
-							System.out.println("해당 도서 재고를 입력하세요.");
+							System.out.println("해당 도서의 재고를 입력하세요.");
 							int stock = scn.nextInt();
 							
 							Books book1 = new Books(Number, title, writer, company, stock);
@@ -111,7 +110,8 @@ public class Bookexe {
 				//사용자모드
 			} else if (mode == 2)
 				System.out.println("1.로그인 2.회원가입");
-
+			
+			
 			int menuu = scn.nextInt();
 			if (menuu == 1) {
 				System.out.println("======로그인=======");
@@ -137,12 +137,29 @@ public class Bookexe {
 						System.out.println("대출하실 도서번호를 입력해주세요.");
 						int brw = scn.nextInt();
 						
+						Books stock = new Books(brw);
+						stock.setStock(brw);
+						Books bw = dao.borrow(stock);
+						LocalDate now = LocalDate.now();
+						System.out.println(now);
+																
+						if(bw!=null) {
+							System.out.println("대출완료!!");
+						}else {
+							System.out.println("대출불가!!");
+						}
 
 					} else if (menu2 == 3) {
 						System.out.println("=============반납=============");
+						System.out.println("반납하실 도서번호를 입력해주세요.");
+						int rent = scn.nextInt();
+						
+						
 					} else if (menu2 == 4) {
 						System.out.println("=============종료=============");
+						System.out.println("시스템을 종료합니다.");
 						break;
+
 					}
 				}
 

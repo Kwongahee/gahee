@@ -28,6 +28,14 @@ public class Books { //관리자 클래스
 
 
 
+	public Books(int stock) {
+		super();
+		this.stock = stock;
+	}
+
+
+
+
 	public Books(int booknumber, String title, String writer, String comapany, int stock) {
 		super();
 		this.booknumber = booknumber;
