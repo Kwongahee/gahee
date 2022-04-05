@@ -50,8 +50,8 @@ public class Bookexe {
 						String writer = scn.next();
 						System.out.println("출판사를 입력하세요.");
 						String company = scn.next();
-						System.out.println("해당 도서의 재고를 입력하세요.");
-						int stock = scn.nextInt();
+						System.out.println("해당 도서는 대출가능여부 (Y/N)");
+						String stock = scn.next();
 
 						Books book1 = new Books(Number, title, writer, company, stock);
 						book1.setBooknumber(Number);
@@ -74,8 +74,8 @@ public class Bookexe {
 						String writer = scn.next();
 						System.out.println("수정하실 출판사를 입력하세요.");
 						String company = scn.next();
-						System.out.println("수정하실 재고를 입력하세요.");
-						int stock = scn.nextInt();
+						System.out.println("수정하실 대출가능여부 (Y/N)");
+						String stock = scn.next();
 
 						Books book1 = new Books(Number, title, writer, company, stock);
 						dao.updateBook(book1);
@@ -123,8 +123,8 @@ public class Bookexe {
 			System.out.println("비밀번호를 입력해주세요");
 			String userpwd = scn.next();
 
-			User users = new User(userid, userpwd);
 			User loginuser = dao.loginuser(userid, userpwd);
+
 			if (loginuser != null) {
 				while (true) {
 					System.out.println(" * * * * * * 환영합니다 * * * * * * *");
@@ -143,18 +143,17 @@ public class Bookexe {
 						System.out.println("대출하실 도서번호를 입력해주세요.");
 						int brw = scn.nextInt();
 
+						Books brww = new Books(brw);
+						dao.borrowBook(brww);
 						LocalDate now = LocalDate.now();
 						System.out.println(now);
-						Books stock = new Books(brw);
-						stock.setStock(brw);
-						Books bw = dao.borrow(stock);
 
-						if (bw != null) {
-							System.out.println("대출완료!!");
-						} else {
-							System.out.println("대출불가!!");
+						List<Books> list = dao.bookList();
+
+						for (Books book1 : list) {
+							System.out.println(book1.toString());
+
 						}
-
 					} else if (menu2 == 3) {
 						System.out.println("=============반납=============");
 						System.out.println("반납하실 도서번호를 입력해주세요.");
@@ -166,11 +165,10 @@ public class Bookexe {
 						break;
 
 					}
-				}
+				} // user login : end of while
 
 			} else {
-				System.out.println("로그인 실패 ! \rn"
-						+ "다시 로그인해주세요.");				
+				System.out.println("로그인 실패 ! \r\n " + "다시 로그인해주세요.");
 			}
 		} else if (menuu == 2) {
 			System.out.println("====== 회원가입 ======");
@@ -187,8 +185,7 @@ public class Bookexe {
 			users.setName(name);
 
 			dao.insertUser(users);
-			System.out.println("=========회원가입 성공======== \rn"
-					+ " 로그인해주세요. ");
+			System.out.println("=========회원가입 성공======== \r\n " + " 로그인해주세요. ");
 
 		}
 

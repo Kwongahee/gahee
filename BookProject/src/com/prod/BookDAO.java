@@ -43,7 +43,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			psmt.setString(2, book.getTitle());
 			psmt.setString(3, book.getWriter());
 			psmt.setString(4, book.getComapany());
-			psmt.setInt(5, book.getStock());
+			psmt.setString(5, book.getStock());
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력");
 		} catch (SQLException e) {
@@ -57,21 +57,25 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	// 수정처리
 	public void updateBook(Books book) {
 		conn = getConnect();
-		String sql = "update b_table\r\n" + "set b_title=?,\r\n" + "    b_writer=?,\r\n" + "    b_company=?,\r\n"
-				+ "stock=?" + "where b_no=?";
+		String sql = "update b_table\r\n"
+				+ "set b_title=?, "
+				+ "b_writer=?, "
+				+ "b_company=? , "
+				+ "stock=? "
+				+ "where b_no=?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, book.getTitle());
 			psmt.setString(2, book.getWriter());
 			psmt.setString(3, book.getComapany());
-			psmt.setInt(4, book.getBooknumber());
-			psmt.setInt(5, book.getStock());
+			psmt.setString(4, book.getStock());
+			psmt.setInt(5, book.getBooknumber());
+	
 
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 수정");
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			disconnect();
@@ -111,7 +115,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 				book.setTitle(rs.getString("b_title"));
 				book.setWriter(rs.getString("b_writer"));
 				book.setComapany(rs.getString("b_company"));
-				book.setStock(rs.getInt("stock"));
+				book.setStock(rs.getString("stock"));
 
 				bk.add(book);
 			}
@@ -153,8 +157,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	// 회원가입 기능
 	public void insertUser(User users) {
 		conn = getConnect();
-		String sql = "insert into user_table (m_id, m_wd, m_name)\r\n"
-				+ "values (?,?,?)";
+		String sql = "insert into user_table (m_id, m_wd, m_name)\r\n" + "values (?,?,?)";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -198,25 +201,23 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		return users1;
 
 	}
-
-	// 대출기능
-	public Books borrow(Books book) {
+	//대출기능
+	public void borrowBook(Books brw) {
 		conn = getConnect();
-		String sql = "update b_table\r\n" + "set stock=?-1" + "where b_no=?";
+		String sql = "update b_table " + " set stock ='N' " + " where b_no=? ";
+
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, book.getStock());
-			psmt.setInt(2, book.getBooknumber());
-			int r = psmt.executeUpdate();
-			System.out.println(r + "건 대출");
-
+			psmt.setInt(1, brw.getBooknumber());
+			psmt.executeUpdate();
+			
+			System.out.println("=== 즐독하세요 v^__^v ===");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
-		return book;
-
+		
 	}
 
 	// 반납기능

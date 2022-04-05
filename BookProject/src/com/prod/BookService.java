@@ -20,7 +20,7 @@ public interface BookService {
 	
 	public void insertUser(User users); //회원가입
 	
-	public Books borrow(Books book); //대출
+	public void borrowBook(Books brw); //대출
 	
 	
 }

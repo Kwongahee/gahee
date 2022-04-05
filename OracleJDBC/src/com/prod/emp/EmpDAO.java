@@ -48,7 +48,7 @@ public class EmpDAO extends DAO {
 //			psmt.executeUpdate();
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력");
-			if(r>0) {
+			if (r > 0) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -56,7 +56,8 @@ public class EmpDAO extends DAO {
 		} finally {
 			// 정상실행, 예외발생 > 반드시 실행코드.
 			disconnect();
-		} return false;
+		}
+		return false;
 	}
 
 	// 수정처리
@@ -74,14 +75,15 @@ public class EmpDAO extends DAO {
 
 			int r = psmt.executeUpdate(); // 실행
 			System.out.println(r + "건 수정");
-			if(r>0) {
+			if (r > 0) {
 				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
-		}return false;
+		}
+		return false;
 	}
 
 	// 삭제처리
@@ -136,20 +138,17 @@ public class EmpDAO extends DAO {
 
 	// 다수조회
 	public List<Employee> searchMany(String many) {
-		
+
 		List<Employee> employees = new ArrayList<Employee>();
 		conn = getConnect();
 		Employee emp = null;
-		String sql = "    select *\r\n"
-				+ "    from emp_java\r\n"
-				+ "    where last_name like ? ";
-		
-		
+		String sql = "    select *\r\n" + "    from emp_java\r\n" + "    where last_name like ? ";
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, many);
 			rs = psmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				emp = new Employee();
 				emp.setEmployeeId(rs.getInt("employee_id")); // employes.employee_id
 				emp.setFirstName(rs.getString("first_name"));
@@ -159,7 +158,7 @@ public class EmpDAO extends DAO {
 				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("Salary"));
 				emp.setPhoneNumber("phone_number");
-				
+
 				employees.add(emp);
 			}
 		} catch (SQLException e) {
@@ -167,12 +166,9 @@ public class EmpDAO extends DAO {
 		} finally {
 			disconnect();
 		}
-		
-		
-		
-		
+
 		return employees;
-		
+
 	}
 
 }
