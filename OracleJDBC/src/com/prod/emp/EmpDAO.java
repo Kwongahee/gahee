@@ -32,6 +32,9 @@ public class EmpDAO extends DAO {
 		}
 		return employees;
 	}
+	
+
+	
 
 	// 입력처리 exectuteUpdate()
 	public boolean insertEmp(Employee emp) {

@@ -22,5 +22,11 @@ public interface BookService {
 	
 	public void borrowBook(Books brw); //대출
 	
+	public void returnBook(Books rt); //반납
+	
+	public Books searchone(int bok); //한 권 조회
+	
+	public Books check(int bok);
+	
 	
 }

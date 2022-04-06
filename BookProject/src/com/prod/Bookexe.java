@@ -45,11 +45,11 @@ public class Bookexe {
 						System.out.println("도서번호를 입력하세요.");
 						int Number = scn.nextInt();
 						System.out.println("도서제목을 입력하세요.");
-						String title = scn.next();
+						String title = scn.nextLine();
 						System.out.println("지은이를 입력하세요.");
-						String writer = scn.next();
+						String writer = scn.nextLine();
 						System.out.println("출판사를 입력하세요.");
-						String company = scn.next();
+						String company = scn.nextLine();
 						System.out.println("해당 도서는 대출가능여부 (Y/N)");
 						String stock = scn.next();
 
@@ -68,12 +68,13 @@ public class Bookexe {
 						System.out.println("=====도서수정=====");
 						System.out.println("도서번호를 입력하세요.");
 						int Number = scn.nextInt();
+
 						System.out.println("수정하실 제목을 입력하세요.");
-						String title = scn.next();
+						String title = scn.nextLine();
 						System.out.println("수정하실 지은이를 입력하세요.");
-						String writer = scn.next();
+						String writer = scn.nextLine();
 						System.out.println("수정하실 출판사를 입력하세요.");
-						String company = scn.next();
+						String company = scn.nextLine();
 						System.out.println("수정하실 대출가능여부 (Y/N)");
 						String stock = scn.next();
 
@@ -109,7 +110,7 @@ public class Bookexe {
 			} else {
 				System.out.println("다시 로그인해주세요 !");
 
-			}
+			} // if/else 관리자 login
 
 			// 사용자모드
 		} else if (mode == 2)
@@ -144,20 +145,38 @@ public class Bookexe {
 						int brw = scn.nextInt();
 
 						Books brww = new Books(brw);
-						dao.borrowBook(brww);
-						LocalDate now = LocalDate.now();
-						System.out.println(now);
+						Books check = dao.check(brw);
 
-						List<Books> list = dao.bookList();
+						if (check.getStock().equals("Y")) {
+							dao.borrowBook(brww);
+							System.out.println("대.출.성.공 @_@");
 
-						for (Books book1 : list) {
-							System.out.println(book1.toString());
+							Books r = dao.searchone(brw);
+							System.out.println(r.toString());
+							System.out.println("~~~~~~~~ 즐독하세요 v^__^v ~~~~~~~~");
 
+						} else if (check.getStock().equals("N")) {
+							System.out.println("대출 불가-_-^");
 						}
+
 					} else if (menu2 == 3) {
 						System.out.println("=============반납=============");
 						System.out.println("반납하실 도서번호를 입력해주세요.");
 						int rent = scn.nextInt();
+
+						Books byeb = new Books(rent);
+						Books check = dao.check(rent);
+
+						if (check.getStock().equals("N")) {
+							dao.returnBook(byeb);
+							System.out.println("반.납.성.공 *^~^*");
+
+							Books r = dao.searchone(rent);
+							System.out.println(r.toString());
+
+						} else if (check.getStock().equals("Y")) {
+							System.out.println("반납 불가.. ");
+						}
 
 					} else if (menu2 == 4) {
 						System.out.println("=============종료=============");
@@ -168,8 +187,8 @@ public class Bookexe {
 				} // user login : end of while
 
 			} else {
-				System.out.println("로그인 실패 ! \r\n " + "다시 로그인해주세요.");
-			}
+				System.out.println("로그인 실패 !\r\n" + "다시 로그인해주세요.");
+			} // if/else login
 		} else if (menuu == 2) {
 			System.out.println("====== 회원가입 ======");
 			System.out.println("사용하고자하는 아이디를 입력해주세요.");

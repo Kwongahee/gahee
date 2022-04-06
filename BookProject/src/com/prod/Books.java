@@ -27,6 +27,14 @@ public class Books { //관리자 클래스
 
 
 
+	
+
+	public Books(String stock) {
+		super();
+		this.stock = stock;
+	}
+
+
 
 	public Books(String id, String pwd) {
 		super();
@@ -154,6 +162,6 @@ public class Books { //관리자 클래스
 				+ "    대출가능여부 : " + stock + " ]";
 	}
 	
-	
+
 	
 }

@@ -17,7 +17,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			psmt.setString(2, pwd);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("로그인 성공!!");
+				System.out.println("로그인 성공");
 				return true;
 			}
 
@@ -26,7 +26,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		} finally {
 			disconnect();
 		}
-		System.out.println("로그인 실패 !");
+		System.out.println("로그인 실패");
 		return false;
 
 	}
@@ -57,11 +57,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	// 수정처리
 	public void updateBook(Books book) {
 		conn = getConnect();
-		String sql = "update b_table\r\n"
-				+ "set b_title=?, "
-				+ "b_writer=?, "
-				+ "b_company=? , "
-				+ "stock=? "
+		String sql = "update b_table\r\n" + "set b_title=?, " + "b_writer=?, " + "b_company=? , " + "stock=? "
 				+ "where b_no=?";
 
 		try {
@@ -71,7 +67,6 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 			psmt.setString(3, book.getComapany());
 			psmt.setString(4, book.getStock());
 			psmt.setInt(5, book.getBooknumber());
-	
 
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 수정");
@@ -190,6 +185,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 				users1 = new User();
 				users1.setUserid(rs.getString("m_id"));
 				users1.setPasswd(rs.getString("m_wd"));
+
 			}
 
 		} catch (SQLException e) {
@@ -201,25 +197,105 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		return users1;
 
 	}
-	//대출기능
-	public void borrowBook(Books brw) {
+
+	// 대출가능여부 확인
+	public Books check(int bok) {
+		Books one = null;
 		conn = getConnect();
-		String sql = "update b_table " + " set stock ='N' " + " where b_no=? ";
+		String sql = "select * from b_table where b_no=? ";
 
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, brw.getBooknumber());
-			psmt.executeUpdate();
+			psmt.setInt(1, bok);
+			rs = psmt.executeQuery();
 			
-			System.out.println("=== 즐독하세요 v^__^v ===");
+
+			if (rs.next()) {
+				one = new Books();
+				one.setBooknumber(rs.getInt("b_no"));
+				one.setStock(rs.getString("stock"));
+				
+				return one;
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
+
+		return one;
 		
+
+	}
+
+	// 대출기능
+	public void borrowBook(Books brw) {
+		conn = getConnect();
+
+		String sql = "update b_table " + " set stock ='N' " + " where b_no=?  ";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, brw.getBooknumber());
+			psmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
 	}
 
 	// 반납기능
+	public void returnBook(Books rt) {
+		conn = getConnect();
+		String sql = "update b_table " + " set stock ='Y' " + " where b_no=? ";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, rt.getBooknumber());
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			disconnect();
+		}
+	}
+
+	// 도서 한 권 조회
+	public Books searchone(int bok) {
+
+		conn = getConnect();
+		Books one = null;
+		String sql = "select *\r\n" + "from b_table where b_no=?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, bok);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				one = new Books();
+				one.setTitle(rs.getString("b_title"));
+				one.setWriter(rs.getString("b_writer"));
+				one.setComapany(rs.getString("b_company"));
+				one.setStock(rs.getString("stock"));
+				one.setBooknumber(rs.getInt("b_no"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
+		return one;
+
+	}
 
 }
