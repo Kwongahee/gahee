@@ -6,7 +6,7 @@ public interface BookService {
 	
 	public boolean login(String id, String pwd); //관리자로그인
 	
-	public void  insertBook(Books book); //책등록
+	public boolean  insertBook(Books book); //책등록
 	
 	public void updateBook(Books book); //책수정
 	
@@ -26,7 +26,9 @@ public interface BookService {
 	
 	public Books searchone(int bok); //한 권 조회
 	
-	public Books check(int bok);
+	public Books check(int bok); // 책 한 권 조회
+	
+	public List<Books> rentBookList(); // 대출가능도서 조회 
 	
 	
 }

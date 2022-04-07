@@ -1,5 +1,7 @@
 package com.prod;
 
+import java.util.InputMismatchException;
+
 public class Books { //관리자 클래스
 	private int booknumber;
 	private String title;
@@ -10,7 +12,32 @@ public class Books { //관리자 클래스
 	private String stock;
 
 	
-	
+//	if (check.getStock().equals("Y")) {
+//		dao.borrowBook(brww);
+//		System.out.println("대.출.성.공 @_@");
+//
+//		Books r = dao.searchone(brw);
+//		System.out.println(r.toString());
+//		System.out.println("~~~~~~~~ 즐독하세요 v^__^v ~~~~~~~~");
+//
+//	} else if (check.getStock().equals("N")) {
+//		System.out.println("대출 불가-_-^");
+//	}
+//	Books brww = new Books(brw);
+//	Books check = dao.check(brw);
+//
+//	if (check.getStock().equals("Y")) {
+//		dao.borrowBook(brww);
+//		System.out.println("대.출.성.공 @_@");
+//
+//		Books r = dao.searchone(brw);
+//		System.out.println(r.toString());
+//		System.out.println("~~~~~~~~ 즐독하세요 v^__^v ~~~~~~~~");
+//
+//	} else if (check.getStock().equals("N")) {
+//		System.out.println("대출 불가-_-^");
+//	}
+//	
 	
 	
 	public Books() {
