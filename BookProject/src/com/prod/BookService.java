@@ -30,5 +30,7 @@ public interface BookService {
 	
 	public List<Books> rentBookList(); // 대출가능도서 조회 
 	
+	public boolean deleteuser(String users); //회원탈퇴
+	
 	
 }

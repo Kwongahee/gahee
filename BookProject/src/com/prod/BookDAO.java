@@ -9,7 +9,9 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 	// 로그인
 	public boolean login(String id, String pwd) {
 		conn = getConnect();
-		String sql = "select * from b_table where b_id =? and b_wd=?";
+		String sql = "SELECT * "
+				+ "FROM B_TABLE "
+				+ "where b_id=? and b_wd=? ";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -104,7 +106,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		List<Books> bk = new ArrayList<Books>();
 		conn = getConnect();
 		try {
-			psmt = conn.prepareStatement("select*from b_table");
+			psmt = conn.prepareStatement("select*from b_table order by b_no");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				Books book = new Books();
@@ -323,5 +325,23 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		return one;
 
 	}
-
+	//회원탈퇴
+	public boolean deleteuser(String users) {
+		conn = getConnect();
+		String sql = "delete from user_table  where m_id=? ";
+		try {
+			psmt=conn.prepareStatement(sql);
+			psmt.setString(1, users);
+			
+			int r = psmt.executeUpdate();
+			if (r > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return false;
+}
 }

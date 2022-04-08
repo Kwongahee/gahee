@@ -21,10 +21,16 @@ public class Bookexe {
 
 // 메뉴: 1.도서등록 2.도서정보수정 3.도서삭제 4.도서목록
 
-		System.out.println("* * * * * * * * * * *가희네 도서관* * * * * * * * * * * *");
-		int mode = 0;
 		
-		System.out.println("1.관리자모드   2.사용자모드");
+		System.out.println("* * * * * * * * * * *가희네 도서관* * * * * * * * * * * *");
+		
+		System.out.println("관리자모드(테스트용) \r\n"
+				+ "id : admin , pwd : 1234 \r\n");
+		
+		int mode = 0;
+
+		System.out.println("1.관리자모드   2.사용자모드   3.종료");
+
 		while (true) {
 			try {
 				mode = scn.nextInt();
@@ -47,9 +53,16 @@ public class Bookexe {
 					System.out.println("1.도서등록  2.도서정보수정  3.도서삭제  4.도서목록  5.회원목록  9.종료");
 					System.out.println("메뉴를 선택해주세요");
 					int number = 0;
-
-					int menu = scn.nextInt();
-					scn.nextLine();
+					int menu = 0;
+					while (true) {
+						try {
+							menu = scn.nextInt();
+							break;
+						} catch (InputMismatchException e) {
+							System.out.println("숫자를 입력해주세요.");
+							scn.nextLine();
+						}
+					}
 
 					if (menu == 1) {
 
@@ -74,17 +87,19 @@ public class Bookexe {
 						String writer = scn.nextLine();
 						System.out.println("출판사를 입력하세요.");
 						String company = scn.nextLine();
-//						while(true) {
 						System.out.println("해당 도서는 대출가능여부 (Y/N)");
-						String stock = scn.next();
-//						scn.nextLine();
-//						if (stock.equals("Y") || stock.equals("N")) {
-//							System.out.println("등록완료");
-//						} else {
-//							System.out.println("도서등록실패 ㅠ^ㅠ \r\n" + "올바르게 입력해주세요.(Y/N) ");
-//						}
-//						}
-//						
+						String stock = null;
+						while (true) {
+							try {
+								stock = scn.next();
+								if (stock.equals("Y") || stock.equals("N"))
+									break;
+								System.out.println("도서등록실패 ㅠ^ㅠ \r\n" + "올바르게 입력해주세요.(Y/N) ");
+							} catch (InputMismatchException e) {
+								scn.nextLine();
+							}
+						}
+						System.out.println("등록완료");
 						Books book1 = new Books(number, title, writer, company, stock);
 						book1.setBooknumber(number);
 						book1.setTitle(title);
@@ -120,7 +135,18 @@ public class Bookexe {
 //						scn.nextLine();
 						String company = scn.nextLine();
 						System.out.println("수정하실 대출가능여부 (Y/N)");
-						String stock = scn.nextLine();
+						String stock = null;
+						while (true) {
+							try {
+								stock = scn.next();
+								if (stock.equals("Y") || stock.equals("N"))
+									break;
+								System.out.println("도서수정실패 ㅠ^ㅠ \r\n" + "올바르게 입력해주세요.(Y/N) ");
+							} catch (InputMismatchException e) {
+								scn.nextLine();
+							}
+						}
+						System.out.println("수정완료 !");
 
 						Books book1 = new Books(number, title, writer, company, stock);
 						dao.updateBook(book1);
@@ -167,9 +193,11 @@ public class Bookexe {
 			// 사용자모드
 
 		} else if (mode == 2)
-			while (true) {
-				System.out.println("1.로그인 2.회원가입");
-				int menuu=0;
+			while (true)
+
+			{
+				System.out.println("1.로그인 2.회원가입 3.회원탈퇴 4.종료");
+				int menuu = 0;
 				while (true) {
 					try {
 						menuu = scn.nextInt();
@@ -192,9 +220,19 @@ public class Bookexe {
 					if (loginuser != null) {
 						while (true) {
 							System.out.println(" * * * * * * 환영합니다 * * * * * * *");
-							System.out.println("1.도서목록조회  2.대출  3.반납  4.대출가능도서조회  5.종료  ");
+							System.out.println("1.도서목록조회  2.대출  3.반납  4.대출가능도서조회  5.로그아웃   ");
 
-							int menu2 = scn.nextInt();
+							int menu2 = 0;
+							while (true) {
+								try {
+									menu2 = scn.nextInt();
+									break;
+								} catch (InputMismatchException e) {
+									System.out.println("숫자를 입력해주세요.");
+									scn.nextLine();
+								}
+							}
+
 							if (menu2 == 1) {
 								System.out.println("===========도서목록============");
 								List<Books> list = dao.bookList();
@@ -205,7 +243,7 @@ public class Bookexe {
 							} else if (menu2 == 2) {
 								System.out.println("=============대출=============");
 								System.out.println("대출하실 도서번호를 입력해주세요.");
-								int brw =0;
+								int brw = 0;
 								while (true) {
 									try {
 										brw = scn.nextInt();
@@ -225,7 +263,9 @@ public class Bookexe {
 
 									Books r = dao.searchone(brw);
 									System.out.println(r.toString());
-									System.out.println("~~~~~~~~ 즐독하세요 v^__^v ~~~~~~~~");
+									System.out.println("                               \r\n"
+											+ "~~~~~~~~ 즐독하세요 v^__^v ~~~~~~~~ \r\n"
+											+ "                                               ");
 
 								} else if (check.getStock().equals("N")) {
 									System.out.println("대출 불가-_-^");
@@ -253,6 +293,10 @@ public class Bookexe {
 
 									Books r = dao.searchone(rent);
 									System.out.println(r.toString());
+									
+									System.out.println("                               \r\n"
+											+ "~~~~~~~~ 다음에 또 오세요 v^__^v ~~~~~~~~ \r\n"
+											+ "                                               ");
 
 								} else if (check.getStock().equals("Y")) {
 									System.out.println("반납 불가.. ");
@@ -264,16 +308,17 @@ public class Bookexe {
 								for (Books book1 : list) {
 									System.out.println(book1.toString());
 								}
-							} 
-							
+							}
+
 							else if (menu2 == 5) {
-								System.out.println("=============종료=============");
-								System.out.println("시스템을 종료합니다.");
+								System.out.println("=============로그아웃=============");
+								System.out.println("안녕히가세용 //^-^");
 								break;
 
 							}
+
 						}
-						break;// user login : end of while
+						// user login : end of while
 
 					} else {
 						System.out.println("로그인 실패 !\r\n" + "다시 로그인해주세요.");
@@ -294,8 +339,25 @@ public class Bookexe {
 
 					dao.insertUser(users);
 					System.out.println("=========회원가입 성공======== \r\n " + " 로그인해주세요. ");
+				} else if (menuu == 3) {
 
-				}
+					System.out.println("=============회원탈퇴=============");
+					System.out.println("아이디를 입력하세요.");
+					String useridd = scn.next();
+
+					boolean result = dao.deleteuser(useridd);
+					if (result) {
+						System.out.println("회원탈퇴완료 .. \r\n 다음에 또 만나요..ㅠ^ㅠ");
+					} else {
+						System.out.println("입력하신 아이디는 없습니다 !");
+					}
+					break;
+				} else if (menuu == 4) {
+					break;
+				} 
+
 			}
+
 	}
+
 }
