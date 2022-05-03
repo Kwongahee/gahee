@@ -42,10 +42,13 @@ public class StudentGetServlet extends HttpServlet {
 			response.getWriter().println("<h3>학생번호 : " + student.getStudentNo() + "</h3>");
 			response.getWriter().println("<h3>이름 : " + student.getStudentName()+ "</h3>");
 //			response.getWriter().println("<h3>영어 : " + student.getEngScore()+ "</h3>");
-			response.getWriter().println("<h3>수정할 영어 점수 : <input type='number' value='"+student.getEngScore()+"'> </h3>");
+			response.getWriter().println("<h3>수정할 영어 점수 : <input type='number'name='eng_score' value='"+student.getEngScore()+"'> </h3>");
 //			response.getWriter().println("<h3>국어 : " + student.getKorScore()+ "</h3>");
-			response.getWriter().println("<h3>수정할 국어 점수 : <input type='number' value = '"+student.getKorScore()+"'> </h3>");
-			response.getWriter().println("<input type='submit' name='mod' id='mod' value='수정'>");
+			response.getWriter().println("<h3>수정할 국어 점수 : <input type='number' name='kor_score' value = '"+student.getKorScore()+"'> </h3>");
+			response.getWriter().println("<input type='hidden' name='cmd' value='mod'>");
+			response.getWriter().println("<input type='hidden' name='user_id' value="+student.getStudentNo()+">");
+			response.getWriter().println("<input type='hidden' name='user_name' value="+student.getStudentName()+">");
+			response.getWriter().println("<input type='submit' name='mod' value='수정'>");
 			response.getWriter().println("</form>");
 						
 			} else {
