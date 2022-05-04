@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>memberResult/memberInsertOutput.jsp</title>
+<title>memberdeleteOutput.jsp</title>
 </head>
 <body>
-  <h3>${name }님 가입이 완료되었습니다.</h3>
-  <jsp:include page="home.jsp"></jsp:include>
+	<h3>${id }님의 정보가 삭제되었습니다.</h3>
+	<jsp:include page="home.jsp"></jsp:include>
 </body>
 </html>

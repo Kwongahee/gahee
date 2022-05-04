@@ -14,12 +14,15 @@ public class FrontController extends HttpServlet {
 	HashMap<String, Control> list = null;
 	String charset = null;
 	@Override
+	//웹페이지 이동작업
 	public void init(ServletConfig config) throws ServletException {
 		charset = config.getInitParameter("charset");
 		list = new HashMap<String, Control>();
 		list.put("/memberInsert.do", new MemberInsertControl()); //여기서 처리 할 작업 인터페이스 선언! 
-		list.put("/memberUpdate.do", new MeberUpdateControl());
+		list.put("/memberUpdate.do", new MemberUpdateControl());
 		list.put("/memberList.do", new MemberListControl());
+		list.put("/memberSearch.do", new MemberSearchControl());
+		list.put("/memberDelete.do", new MemberDeleteControl());
 	}
 
 	@Override

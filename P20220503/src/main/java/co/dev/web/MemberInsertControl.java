@@ -33,6 +33,7 @@ public class MemberInsertControl implements Control {
 		request.setAttribute("id", id); //id값을 담는다!
 		request.setAttribute("name", nm);
 		
+		
 		//Dispatcher 객체 기능 > forward 기능있음.
 		request.getRequestDispatcher("memberResult/memberInsertOutput.jsp").forward(request, response);
 		//여기로 이동하겠습니다아아(요청정보의 값 그대로 들고감)
