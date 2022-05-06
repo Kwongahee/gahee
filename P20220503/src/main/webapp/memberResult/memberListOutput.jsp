@@ -23,6 +23,7 @@
 						<th>아이디</th>
 						<th>이름</th>
 						<th>이메일</th>
+						<th>이미지</th>
 						<th>비밀번호</th>
 					</tr>
 				</thead>
@@ -32,6 +33,7 @@
 							<td>${member.id }</td>
 							<td>${member.name }</td>
 							<td>${member.email }</td>
+							<td><c:if test="${!empty member.profile }"><img width = "50px" src="${pageContext.servletContext }/Upload/${member.profile }"></c:if></td>
 							<td>${member.passwd }</td>
 						</tr>
 					</c:forEach>
