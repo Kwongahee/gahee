@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      //아작스 형태 > 오브젝트 > 배열 .. 아작스는 비동기방식 ! 실행되야하는 함수들 콜백안에
+      
+      function drawChart() { 
+    	var aryData = []; //배열 안에 배열 형식으로 만들어야함
+		aryData.push(['Dept', 'cnt per dept']); //타이틀에 해당되는 부분
+    	
+    	fetch('EmployeePerDept') //요청 url.. 비동기방식으로 실행됨
+    		.then(result => result.json())
+    		.then(callBack) //데이터를 가져오면 실행하세요.		
+    		.catch(error => console.log(error));
+    	
+		function  callBack(empData) {
+			for(let field in empData) {
+				// object <-> array
+				let ary = [];
+				ary.push(field);
+				ary.push(empData[field]);
+				aryData.push(ary);
+			}
+	        var data = google.visualization.arrayToDataTable(aryData); //데이터가 안으로..?
+
+	        var options = { title: '부서별 사원 수 '};
+
+	        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+	        chart.draw(data, options);
+			
+		}
+		
+      }
+    </script>
+</head>
+<body>
+	<div id="piechart" style="width: 900px; height: 500px;"></div>
+</body>
+</html>
