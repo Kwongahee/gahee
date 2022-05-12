@@ -20,11 +20,11 @@ public class ModifyBookControl implements Controller {
 		String press = request.getParameter("press");
 		int price = Integer.parseInt(request.getParameter("price"));
 		
-//		if(title.isBlank() || author.isBlank() || press.isBlank()) {
-//			request.setAttribute("error", "항목을 입력하세요 !");
-//			request.getRequestDispatcher("view/modify").forward(request, response);
-//			return;
-//		};
+		if(code.isEmpty()||  title.isBlank() || author.isBlank() || press.isBlank()) {
+			request.setAttribute("error", "항목을 입력하세요 !");
+			request.getRequestDispatcher("view/modify").forward(request, response);
+			return;
+		};
 			
 		BookVO book = new BookVO();
 		book.setBookCode(code);

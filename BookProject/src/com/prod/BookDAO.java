@@ -12,6 +12,7 @@ public class BookDAO extends DAO implements BookService { // 기능메소드 담
 		String sql = "SELECT * "
 				+ "FROM B_TABLE "
 				+ "where b_id=? and b_wd=? ";
+	
 
 		try {
 			psmt = conn.prepareStatement(sql);

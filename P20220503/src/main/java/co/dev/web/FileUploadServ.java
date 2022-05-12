@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+
+
 @WebServlet("/fileUploadServlet")
 public class FileUploadServ extends HttpServlet {
    private static final long serialVersionUID = 1L;
@@ -40,11 +42,11 @@ public class FileUploadServ extends HttpServlet {
       int maxSize = 1024 * 1024 * 10;// 최대 크기를 10메가로하겠습니다.
       String encoding = "UTF-8";
       MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, encoding,
-            new DefaultFileRenamePolicy());
-      title = multi.getParameter("title");
-      content = multi.getParameter("content");
-      String profile = multi.getOriginalFileName("profile"); // 최초 업로드시 정해지는 이름
-      String fileName = multi.getFilesystemName("profile"); // 리네임정책에 의해 정해진 이름
+              new DefaultFileRenamePolicy());
+        title = multi.getParameter("title");
+        content = multi.getParameter("content");
+        String profile = multi.getOriginalFileName("profile"); // 최초 업로드시 정해지는 이름
+        String fileName = multi.getFilesystemName("profile"); // 리네임정책에 의해 정해진 이름
       System.out
             .println("title: " + title + ", content: " + content + ", profile: " + profile + ", file: " + fileName);
    }
