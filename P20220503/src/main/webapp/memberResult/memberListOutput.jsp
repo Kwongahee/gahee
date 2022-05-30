@@ -10,9 +10,7 @@
 <title>memberResult/memberListOutput.jsp</title>
 </head>
 <body>
-
 	<c:choose>
-
 		<c:when test="${empty all }">
 			<h3>회원정보가 없습니다.</h3>
 		</c:when>

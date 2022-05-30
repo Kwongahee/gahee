@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <%=request.getAttribute("hello") %>
-    <h4>${hello }</h4>
-	<h3>등록결과페이지</h3>
-    <a href="${pageContext.servletContext.contextPath }/index.jsp">첫페이지</a>
-
+<h3>회원 탈퇴</h3>
+<form action="${pageContext.servletContext.contextPath }/delete.do" method="post">
+<p>${info.email } 님 안녕하세요</p>
+<input type="submit" value = "탈퇴">
+</form>
 </body>
 </html>

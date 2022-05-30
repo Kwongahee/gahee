@@ -14,7 +14,8 @@ public class AddBookControl implements Controller {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	
+		//db insert
+		//addBook.do 에서 처리된값들 addOutput.jsp 로 공유
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
 		String press = request.getParameter("press");
@@ -29,8 +30,9 @@ public class AddBookControl implements Controller {
 		BookService service = new BookService();
 		service.addBook(vo);
 		
-		request.setAttribute("title", title);
-		
+		// ""라는 이름으로 ~속성. 
+//		request.setAttribute("hello", "홍길동");
+		request.setAttribute("hello", title);
 		request.getRequestDispatcher("result/addOutput.jsp").forward(request, response);
 
 

@@ -21,7 +21,6 @@ public class MemberDAO extends DAO {
          int r = psmt.executeUpdate();
          System.out.println(r + "건 수정 ");
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
       } finally {
          disconnect();

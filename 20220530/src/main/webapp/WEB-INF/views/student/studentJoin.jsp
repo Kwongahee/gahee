@@ -7,10 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <%=request.getAttribute("hello") %>
-    <h4>${hello }</h4>
-	<h3>등록결과페이지</h3>
-    <a href="${pageContext.servletContext.contextPath }/index.jsp">첫페이지</a>
-
+<div align="center"></div>
+	<div><h1>${message }</h1></div>
 </body>
 </html>
