@@ -13,7 +13,8 @@
 	  <a href="studentList.do">회원목록</a><p>
 	  <a href="studentLoginForm.do">로 그 인</a><p>
 	  <a href="studentLogout.do">로그아웃</a><p>
-	  <a href="noticeList.do">게시글 목록보기</a>
+	  <a href="noticeList.do">게시글 목록보기</a><p>
+	  <a href="admin.do">관리자</a><p>
 	</div>
 </div>
 </body>

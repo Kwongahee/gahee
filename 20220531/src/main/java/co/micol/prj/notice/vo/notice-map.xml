@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.micol.prj.notice.service.NoticeMapper">
 
-	<resultMap id="noticeMap" type="co.micol.prj.notice.vo.NoticeVO">
+	<resultMap id="noticeMap"
+		type="co.micol.prj.notice.vo.NoticeVO">
 		<id property="noticeId" column="notice_id" />
 		<result property="noticeName" column="notice_name" />
 		<result property="noticeTitle" column="notice_title" />
@@ -24,40 +25,52 @@
 	</select>
 
 	<select id="noticeSelect" resultMap="noticeMap">
-		SELECT * FROM NOTICE WHERE NOTICE_ID = #{noticeId}
+		SELECT * FROM NOTICE WHERE
+		NOTICE_ID = #{noticeId}
 	</select>
 
-	<insert id="noticeInsert" parameterType="co.micol.prj.notice.vo.NoticeVO">
-		<selectKey resultType="int" keyProperty="noticeId" order="BEFORE">
+	<insert id="noticeInsert"
+		parameterType="co.micol.prj.notice.vo.NoticeVO">
+		<selectKey resultType="int" keyProperty="noticeId"
+			order="BEFORE">
 			SELECT CASE WHEN MAX(NOTICE_ID) !=0 THEN MAX(NOTICE_ID) + 1
-			 ELSE 1 END AS ID FROM NOTICE
+			ELSE 1 END AS ID FROM NOTICE
 		</selectKey>
-		
-		INSERT INTO NOTICE
-		 VALUES(#{noticeId},#{noticeName},#{noticeTitle}, 
-		 		#{noticeContents},#{noticeDate},0,#{noticeAttech},#{noticeDir})
+
+		INSERT INTO NOTICE (notice_id,
+		notice_name,notice_title,notice_contents
+		,notice_date,notice_hit
+		,notice_attech,
+		notice_dir)
+		VALUES(
+		#{noticeId},#{noticeName},#{noticeTitle},#{noticeContents}
+		,#{noticeDate},0,#{noticeAttech},#{noticeDir})
+
 	</insert>
 
-	<update id="noticeUpdate" parameterType="co.micol.prj.notice.vo.NoticeVO">
-		UPDATE NOTICE 
+	<update id="noticeUpdate"
+		parameterType="co.micol.prj.notice.vo.NoticeVO">
+		UPDATE NOTICE
 		<set>
-		<if test = "noticeName != null">notice_name = #{noticeName}, </if>
-		<if test = "noticeTitle != null">notice_title = #{noticeTitle}, </if>
-		<if test = "noticeContents != null">notice_contents = #{noticeContents}, </if>
-		<if test = "noticeDate != null">notice_date = #{noticeDate}, </if>
-    	<if test = "noticeAttech != null">notice_attech = #{noticeAttech}, </if>		
-		<if test = "noticeDir != null">notice_dir = #{noticeDir}, </if>
-		</set> 
+			<if test="noticeName != null">NOTICE_NAME = #{noticeName}, </if>
+			<if test="noticeTitle != null">NOTICE_TITLE = #{noticeTitle}, </if>
+			<if test="noticeContents != null">NOTICE_CONTENTS = #{noticeContents}, </if>
+			<if test="noticeDate != null">NOTICE_DATE = #{noticeDate}, </if>
+			<if test="noticeAttech != null">NOTICE_ATTECH = #{noticeAttech}, </if>
+			<if test="noticeDir != null">NOTICE_DIR = #{noticeDir}, </if>
+		</set>
 		where notice_id = #{noticeId}
 	</update>
 
-	<delete id="noticeDelete" parameterType="co.micol.prj.notice.vo.NoticeVO">
-		DELETE FROM NOTICE NOTICE_ID = #{noticeId}
+	<delete id="noticeDelete"
+		parameterType="co.micol.prj.notice.vo.NoticeVO">
+		DELETE FROM NOTICE WHERE NOTICE_ID = #{noticeId}
 	</delete>
 
 	<update id="noticeHitUpdate" parameterType="int">
 		UPDATE NOTICE
-		SET NOTICE_HIT = NOTICE_HIT + 1 WHERE NOTICE_ID = #{id}
+		SET
+		NOTICE_HIT = NOTICE_HIT + 1 WHERE NOTICE_ID = #{id}
 	</update>
 
 </mapper>

@@ -9,7 +9,7 @@
 </head>
 <body>
 <div align="center">
-  <div><d1>회원 목록</d1></div>
+  <div><h1>회원 목록</h1></div>
   <div>
   	  <c:forEach items="${students }" var="student">
   	  ${student.id } :
