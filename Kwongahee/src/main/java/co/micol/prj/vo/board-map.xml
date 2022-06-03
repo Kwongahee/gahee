@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.prj.service.boardMapper">
+
+	<resultMap id="boardMap" type="co.micol.prj.vo.boardVO">
+		<id property="boardId" column="board_id" />
+		<result property="boardName" column="board_name" />
+		<result property="boardTitle" column="board_title" />
+		<result property="boardContents" column="board_contents" />
+		<result property="boardDate" column="board_date" />
+		<result property="boardHit" column="board_hit"/>
+
+	</resultMap>
+
+
+	<select id="boardList" resultMap="boardMap">
+		select * from board 
+	</select>
+	
+	<select id="boardSelect" resultMap="boardMap">
+		select * from board where board_id = ${boardId}
+	</select>
+
+	<insert id="boardInsert" parameterType="co.micol.prj.vo.boardVO">
+		<selectKey resultType="int" keyProperty="boardId" order="BEFORE">
+			select case when max(board_id) !=0 then max(board_id) + 1
+			else 1 end as id from board
+		</selectKey>
+
+		INSERT INTO BOARD(board_id, board_name, board_title, board_contents,
+		board_date, board_hit)
+		VALUES(#{boardId},#{boardName},#{boardTitle},#{boardContents},#{boardDate},0)
+	</insert>
+
+	<update id="boardUpdate" parameterType="co.micol.prj.vo.boardVO">
+		Update board
+		<set>
+			<if test="boardName != null">board_name = #{boardName}, </if>
+			<if test="boardTitle != null">board_title = #{boardTitle}, </if>
+			<if test="boardContents != null">board_contents = #{boardContents}, </if>
+			<if test="boardDate != null">board_date = #{boardDate}, </if>
+		</set>
+		where board_id=#{boardId}
+	</update>
+	
+	<delete id="boardDelete" parameterType="co.micol.prj.vo.boardVO">
+		delete from board where board_id=#{boardId}
+	</delete>
+	
+	<update id="boardHitUpdate" parameterType="int">
+	update board set board_hit = board_hit + 1 where board_id= #{boardId}
+	</update>
+
+</mapper>
+
+	
