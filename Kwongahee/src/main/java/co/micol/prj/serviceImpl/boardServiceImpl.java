@@ -16,8 +16,8 @@ public class boardServiceImpl implements boardService {
 	private boardMapper map;
 	
 	@Override
-	public List<boardVO> boardList() {
-		return map.boardList();
+	public List<boardVO> boardList(int state, String key) {
+		return map.boardList(state, key);
 	}
 
 	@Override

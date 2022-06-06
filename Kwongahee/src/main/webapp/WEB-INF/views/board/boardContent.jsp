@@ -12,8 +12,8 @@
 	<div>
 		<table id="table" border="1">
 			<tr>
-				<th >작성자</th>
-				<td width="500">${content.boardName }</td>
+				<th width="70">작성자</th>
+				<td width="870">${content.boardName }</td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -36,9 +36,9 @@
 	<div>
 		<button type="button" onclick="location.href='boardList.do'">목록</button>
 		<button type="button" onclick="location.href='boardDelete.do?boardId=${content.boardId}'">삭제</button>
-		<button type="button" onclick="location.href='boardModify.do'">수정</button>
+		<button type="button" onclick="location.href='boardModifyForm.do?boardId=${content.boardId }'">수정</button>
 	</div>
 </div>
 </body>
-		
+	
 </html>

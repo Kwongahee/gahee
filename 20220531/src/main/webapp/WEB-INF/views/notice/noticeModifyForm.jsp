@@ -50,7 +50,6 @@
 		<input type="submit" value="수정">&nbsp;&nbsp;
 		<input type="button" value="목록" onclick="location.href='noticeList.do'">
 	</div>	
-	
 	</form>
 </div>
 </div>

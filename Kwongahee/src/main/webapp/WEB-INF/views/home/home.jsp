@@ -12,7 +12,8 @@
 			<h1>가희네 홈페이지 ^-^</h1>
 		</div>
 		<div>
-		<a href="boardList.do">게시물 목록</a>
+		<a href="boardList.do">게시물 목록</a><p>
+		<a href="adimn.do">관리자</a>
 		</div>
 	</div>
 </body>

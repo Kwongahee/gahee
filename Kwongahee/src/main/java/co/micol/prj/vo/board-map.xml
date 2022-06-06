@@ -15,6 +15,11 @@
 
 	<select id="boardList" resultMap="boardMap">
 		select * from board 
+		where
+		<if test="state == 1">1=1</if>
+		<if test="state == 2">BOARD_NAME = #{key}</if>
+		<if test="state == 3">BOARD_TITLE LIKE '%'||#{key}||'%'</if>
+		<if test="state == 4">BOARD_CONTENTS LIKE '%'||#{key}||'%'</if>
 	</select>
 	
 	<select id="boardSelect" resultMap="boardMap">
@@ -26,7 +31,6 @@
 			select case when max(board_id) !=0 then max(board_id) + 1
 			else 1 end as id from board
 		</selectKey>
-
 		INSERT INTO BOARD(board_id, board_name, board_title, board_contents,
 		board_date, board_hit)
 		VALUES(#{boardId},#{boardName},#{boardTitle},#{boardContents},#{boardDate},0)
@@ -40,7 +44,7 @@
 			<if test="boardContents != null">board_contents = #{boardContents}, </if>
 			<if test="boardDate != null">board_date = #{boardDate}, </if>
 		</set>
-		where board_id=#{boardId}
+		where board_id = #{boardId}
 	</update>
 	
 	<delete id="boardDelete" parameterType="co.micol.prj.vo.boardVO">

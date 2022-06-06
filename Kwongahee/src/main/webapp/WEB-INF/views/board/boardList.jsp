@@ -12,7 +12,19 @@
 		<div>
 			<h1>게시판</h1>
 		</div>
-		<br>
+		<div>
+			<form id="frm" action="" method="post">
+				<select name="state" id="state">
+					<option value="1">전체</option>
+					<option value="2">작성자</option>
+					<option value="3">제 목</option>
+					<option value="4">내 용</option>
+				</select>
+				<input type="text" id="key" name="key">
+				<button type="button" onclick="searchlist()">검색</button>
+			</form>
+		</div>
+		<br />
 		<div>
 			<table id="tb" border="1">
 				<thead>
@@ -49,6 +61,7 @@
 			<div>
 				<button type="button" onclick="location.href='boardInsertForm.do'">글
 					등록</button>
+				<button type="button" onclick="location.href='home.do'">홈으로</button>	
 			</div>
 		</div>
 
@@ -56,11 +69,37 @@
 </body>
 
 <script>
+
 	function boardinfo(data){
 	frm2.boardId.value = data;
 	frm2.action="boardContent.do"
 	frm2.submit();		
 			}
 
+	function searchlist(){
+		let list = document.querySelector('tbody');
+		fetch('ajaxSearch.do',{
+			method : 'POST',
+			body : new FormData(document.getElementById('frm'))
+		})
+		.then(response => response.json())
+		.then(data => {
+			list.innHTML='';
+			makeTbody(data);
+		})
+	}
+
+	function makeTbody(Ary){
+		let keys = ['boardId', 'boardName', 'boardTitle', 'boardDate', 'boardHit']
+		Ary.forEach(b => {
+			let tr = document.creatElement('tr')
+			for(let key of keys){
+				let td = document.createElement('td')
+				td.innerHTML=b[key];
+				tr.appendChild(td);
+			}
+			list.appendChild(tr);
+		})
+	}
 </script>
 </html>

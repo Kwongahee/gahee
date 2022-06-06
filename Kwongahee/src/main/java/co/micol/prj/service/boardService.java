@@ -5,7 +5,7 @@ import java.util.List;
 import co.micol.prj.vo.boardVO;
 
 public interface boardService {
-	List<boardVO> boardList();
+	List<boardVO> boardList(int state, String key);
 	boardVO boardSelect(boardVO vo);
 	int boardInsert(boardVO vo);
 	int boardUpdate(boardVO vo);
