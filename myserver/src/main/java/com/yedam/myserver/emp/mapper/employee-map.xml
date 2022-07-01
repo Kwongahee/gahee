@@ -1,64 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yedam.myserver.emp.mapper.EmployeeMapper"> 
+<mapper namespace="com.yedam.myserver.emp.mapper.EmployeeMapper">
 
-<select id="findEmployees"  resultType="employee">
-	select *
-	from employees
-	order by employee_id  
-</select>
 
-<insert id="persist" >
-	insert into employees (
-			employee_id,
-			first_name,
-			last_name,
-			email,
-			hire_date,
-			job_id
-	) values (
-			#{employee_id},
-			#{first_name},
-			#{last_name},
-			#{email},
-			#{hire_date},
-			#{job_id}
-	)
-</insert>
+	<resultMap type="jobs" id="jobEmployeeMap">
+	<!-- 1대 다 관계 -->
+		<collection  property="employees" javaType="ArrayList"
+					 column="job_id" ofType="Employee" select="findJobEmployees" />
+	</resultMap>
+	<select id="findJobs" resultMap="jobEmployeeMap">
+		select job_id, job_title, min_salary, max_salary
+		from jobs
+		order by job_id
+	</select>
+	<select id="findJobEmployees" resultType="employee">
+		select * 
+		from   employees
+		where  job_id = #{job_id}
+		order  by job_id
+	</select>
 
-<insert id="remove" >
-	delete from employees
-	where employee_id = #{employee_id}
-</insert>
 
-<update id="merge" >
-	update employees
-	   set first_name = #{first_name},
-		   last_name = #{last_name},
-		   email = #{email},
-		   phone_number = #{phone_number},
-		   job_id = #{job_id},	
-		   salary = #{salary}    
-	where employee_id = #{employee_id}
-</update>
+	<resultMap type="employee" id="employeeMapSelect">
+		<association property="department" column="department_id"
+			javaType="Departments" select="findDepartment" />
+	</resultMap>
 
-<select id="findJobs" resultType="jobs">
-	select job_id, job_title 
-	  from jobs
-	 order by job_id 
-</select>
+	<select id="findDepartment" resultType="departments">
+		SELECT *
+		FROM DEPARTMENTS
+		WHERE DEPARTMENT_ID = #{department_id}
+	</select>
 
-<select id="findDepartments" resultType="departments">
-	select a.department_id, a.department_name 
-	  from departments a
-	 order by a.department_id 
-</select>
-<select id="empStat" resultType="map"> <!-- map.put("deptId", 10) -->
-	SELECT DEPARTMENT_ID "deptId"
-		   , COUNT(*) "cnt"
-	FROM EMPLOYEES
-	WHERE DEPARTMENT_ID IS NOT NULL
-	GROUP BY DEPARTMENT_ID
-</select>
+
+
+	<resultMap type="employee" id="employeeMap">
+		<id column="employee_id" property="employee_id" />
+		<result column="first_name" property="first_name" />
+		<result column="email" property="email" />
+		<association property="department">
+			<id column="department_id" property="department_id" />
+			<result column="department_name" property="manager_id" />
+			<result column="location_id" property="location_id" />
+			<!-- <result column="manager_id" property="manager_id" /> -->
+		</association>
+	</resultMap>
+
+	<!-- 사원 번호 조회하면 자동으로 부서번호도 조회 (employeeMap Select으로 감) -->
+	<select id="findEmployees" resultMap="employeeMapSelect">
+		SELECT E.*
+		FROM EMPLOYEES E
+		ORDER BY EMPLOYEE_ID
+	</select>
+
+	<insert id="persist">
+		insert into employees (
+		employee_id,
+		first_name,
+		last_name,
+		email,
+		hire_date,
+		job_id
+		) values (
+		#{employee_id},
+		#{first_name},
+		#{last_name},
+		#{email},
+		#{hire_date},
+		#{job_id}
+		)
+	</insert>
+
+	<insert id="remove">
+		delete from employees
+		where employee_id =
+		#{employee_id}
+	</insert>
+
+	<update id="merge">
+		update employees
+		set first_name = #{first_name},
+		last_name = #{last_name},
+		email = #{email},
+		phone_number =
+		#{phone_number},
+		job_id = #{job_id},
+		salary = #{salary}
+		where employee_id
+		= #{employee_id}
+	</update>
+
+
+	<select id="findDepartments" resultType="departments">
+		select a.department_id,
+		a.department_name
+		from departments a
+		order by a.department_id
+	</select>
+	<select id="empStat" resultType="map"> <!-- map.put("deptId", 10) -->
+		SELECT DEPARTMENT_ID "deptId"
+		, COUNT(*) "cnt"
+		FROM EMPLOYEES
+		WHERE
+		DEPARTMENT_ID IS NOT NULL
+		GROUP BY DEPARTMENT_ID
+	</select>
 
 </mapper>

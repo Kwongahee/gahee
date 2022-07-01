@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <title>xhr.html</title>
+</head>
+
+<body>
+    <div class="container">
+        <input name="targetDt" id="targetDt" value="20220620">
+        <button type="button" id="btnBoxOffice">검색</button>
+        <div id="divBoxOffice"></div>
+        <div id="divMovieInfo" style="display:none">
+            <div class="row">
+                <div class="col-2">런닝타임:</div>
+                <div class="col-10 showTm">104</div>
+            </div>
+            <div class="row">
+                <div class="col-2">개봉일:</div>
+                <div class="col-10 openDt">20220615</div>
+            </div>
+            <div class="row">
+                <div class="col-2">actors:</div>
+                <div class="col-10">
+                    <div class="row actors">크리스 에반스,타이카 와이티티,피터 손</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">directors:</div>
+                <div class="col-10">
+                    <div class="row directors">앵거스 맥클레인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            btnBoxOfficeHandler(); //박스오피스
+            movieInfoHandler();    //영화상세정보
+        })
+
+        function btnBoxOfficeHandler() {
+            $("#btnBoxOffice").on("click", function(){
+            	//날짜값
+                let dt = $("#targetDt").val();
+            	//날짜 입력 안된경우
+                if (dt =="") {
+                    alert("날짜를 입력하세요")
+                    return;
+                } 
+                var url ='http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt='+dt
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    dataType: 'json',
+                    success: boxOfficeCallback
+                })
+            })
+        }
+        
+		//들어오는 인수값(result) > 제이슨 
+        function boxOfficeCallback(result){
+            let list = result.boxOfficeResult.dailyBoxOfficeList
+            $('#divBoxOffice').empty();
+            for (mv of list) {
+                $('<div>').addClass('movie row')
+                    .attr('data-moviecd',mv.movieCd)
+                    .append($('<div>').html(mv.rank).addClass('col-2')) //div 태그 만든것
+                    .append($('<div>').html(mv.movieNm).addClass('col-10'))
+                    .appendTo('#divBoxOffice') //안에 부모 적기
+            }
+        }
+	//동적으로 실행할 이벤트 > 부모에게 이벤트 거삼
+            function movieInfoHandler(result){
+            $('#divBoxOffice').on('click', '.movie', function () {
+                let moviecd = $(this).data('moviecd');
+                let url =
+                    'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd='+moviecd;
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    dataType: 'json',
+                }).done(function(result){
+
+                    $('#divMovieInfo').show(); //div 보이도록 수정 
+                    let info = result.movieInfoResult.movieInfo; 
+					
+                    //actors 는 넘어오는 값이 여러개 (배열) 
+                    let actors = ''
+                    for(actor of info.actors){
+                       	 actors += `<div class ="col-3">${actor.peopleNm}</div>`
+                       }
+                    
+
+                    let directors = ''
+                    for(directors of info.directors){
+                    	 directors += `<div class ="col-3">${directors.peopleNm}</div>`
+                    }
+
+                    
+
+//                    $('.showTm').html(info.showtm)
+//                    $('.openDt').html(info.openDt)
+ //                   $('.actors').html(actors)
+                    
+                    $('#divMovieInfo').find('.showTm').html(info.showtm)
+                    $('#divMovieInfo').find('.openDt').html(info.openDt)
+                    $('#divMovieInfo').find('.actors').html(actors)
+                    $('#divMovieInfo').find('.directors').html(directors)
+
+                })
+            })
+        }
+
+
+
+        // btn.addEventListener('click', dailyList)
+        // boxlist.addEventListener('click', movieInfo)
+
+        // function dailyList() {
+        //     // XMLHttpRequest 객체의 생성
+        //     var req = new XMLHttpRequest();
+        //     // 비동기 방식으로 Request를 오픈한다
+        //     var url =
+        //         'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20220614'
+        //     req.open('GET', url, true);
+        //     // Request를 전송한다
+        //     req.send();
+
+        //     //서버가 로드되면
+        //     // XMLHttpRequest.readyState 프로퍼티가 변경(이벤트 발생)될 때마다 콜백함수(이벤트 핸들러)를 호출한다.
+        //     req.onload = function () {
+        //         // 이 함수는 Response가 클라이언트에 도달하면 호출된다.
+        //         console.log(typeof this.responseText)
+        //         var obj = JSON.parse(this.responseText);
+        //         var list = obj.boxOfficeResult.dailyBoxOfficeList
+        //         boxlist.innerHTML = '';
+        //         for (mv of list) {
+        //             boxlist.innerHTML += `<div class='info' data-cd='${mv.movieCd}'>${mv.movieNm}</div>`;
+        //         }
+        //     }
+        // };
+
+
+        // function movieInfo() {
+        //     console.log()
+        //     var req = new XMLHttpRequest();
+        //     var url =
+        //         'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20204548'
+        //     req.open('GET', url, true);
+        //     req.send();
+        //     req.onload = function () {
+        //         var obj = JSON.parse(this.responseText);
+
+        //         //영화감독의 이름 출력
+        //         var list = obj.movieInfoResult.movieInfo.directors[0].peopleNm;
+        //         console.log(list)
+        //     }
+        // }
+        // movieInfo();
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>

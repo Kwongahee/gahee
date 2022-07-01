@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 //널값제외
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,7 +35,8 @@ public class Employee {
 	@JsonProperty("fname")
 	private String first_name;
 	private Integer employee_id;
-	private String department_name;
+	
+	private Departments department;
 	
 
 	
