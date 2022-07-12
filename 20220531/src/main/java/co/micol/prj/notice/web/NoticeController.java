@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.micol.prj.notice.service.NoticeService;
 import co.micol.prj.notice.vo.NoticeVO;
@@ -42,7 +43,6 @@ public class NoticeController {
 
 	@PostMapping("/noticeInsert.do")
 	public String noticeInsert(NoticeVO vo, MultipartFile file) {
-
 		String fileName = file.getOriginalFilename();
 
 		// 파일이 비어있지않으면 true가 return

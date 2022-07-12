@@ -2,7 +2,7 @@ package com.yedam.myserver.cart.mapper;
 
 import java.util.List;
 
-import com.yedam.myserver.cart.vo.CartVO;
+import main.java.com.yedam.myserver.cart.vo.CartVO;
 
 public interface CartMapper {
 	List<CartVO> findAll();   	//전체조회

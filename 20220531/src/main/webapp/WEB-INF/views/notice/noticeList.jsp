@@ -44,10 +44,10 @@ table tr:hover {
 		</tr>
 		</thead>
 		<tbody>
-		
 			<c:if test="${not empty notices }">
 				<c:forEach items="${notices }" var="n">
 					<tr onclick="eventList(${n.noticeId })">
+						
 						<td>${n.noticeId }</td>
 						<td>${n.noticeName }</td>
 						<td>${n.noticeTitle }</td>
